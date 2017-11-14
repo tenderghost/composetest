@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    image: 'nginx:alpine'
+    links:
+      - flask1
+      - flask2
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./html:/usr/share/nginx/html:ro
+      - ./html/statics:/statics:ro
+    ports:
+      - "8080:80"
+  flask1:
+    build: ./app
+    ports:
+      - 5000
+    volumes:
+      - .:/todo
+  flask2:
+    build: ./app
+    ports:
+      - 5000
+    volumes:
+      - .:/todo
